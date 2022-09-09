@@ -1,7 +1,6 @@
 package com.cos.photogramstart.web;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,8 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
@@ -43,16 +40,17 @@ public class AuthController {
 	}
 
 	@PostMapping("/auth/signup")
-	public  String signup(@Valid SignupDto signupDto, BindingResult bindingResult) {
+	public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			Map<String, String> errorMap = new HashMap<>();
 			for (FieldError error : bindingResult.getFieldErrors()) {
 				errorMap.put(error.getField(), error.getDefaultMessage());
 			}
-			throw new CustomValidationException("유효성검사 실패",errorMap);
+			throw new CustomValidationException("유효성검사 실패", errorMap);
 		} else {
 //		log.info(signupDto.toString());
+
 			User user = signupDto.toEntity();
 //		log.info(user.toString());
 			User userEntity = authService.회원가입(user);
