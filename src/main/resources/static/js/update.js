@@ -1,5 +1,6 @@
 // (1) 회원정보 수정
-function update(userId) {
+function update(userId, event) {
+	event.preventDefault(); //폼태그 액션 막기
 	let data1 = $("#profileUpdate").serialize();
 	
 	$.ajax({
