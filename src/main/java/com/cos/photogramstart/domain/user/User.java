@@ -39,11 +39,11 @@ public class User {
 	private String profileImageUrl; //사진
 	private String role; //권한
 	
-	private LocalDateTime creaDateTime;
+	private LocalDateTime createDate;
 	
 	@PrePersist //DB에 insert되기전에 실행
 	public void createDate() {
-		this.creaDateTime = LocalDateTime.now(); 
+		this.createDate = LocalDateTime.now(); 
 	}
 	
 }
