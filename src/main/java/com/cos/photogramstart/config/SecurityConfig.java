@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 		// super.configure(http);
 		http.csrf().disable(); // csrf 비활성화
-		http.authorizeRequests().antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**")
+		http.authorizeRequests().antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**", "/api/**")
 				.authenticated() // 인증이 필요해
 				.anyRequest().permitAll().and().formLogin().loginPage("/auth/signin") // GET방식
 				.loginProcessingUrl("/auth/signin") // POST방식 -> 스프링 시큐리티가 로그인 프로세스를 진행한다.
