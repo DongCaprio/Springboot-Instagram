@@ -7,8 +7,10 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 
@@ -23,6 +25,7 @@ public class ImageService {
 	@Value("${file.path}")
 	private String uploadFolder;
 	
+	@Transactional
 	public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
 		//UUID 쓰는 이유 -> 실제 파일명이 같으면 ex) 1.jpg가 2개 저장이 되는순간 원래 있던것이 나중에 저장되는것으로 덮어씌워진다
 		UUID uuid = UUID.randomUUID();
@@ -39,5 +42,9 @@ public class ImageService {
 			e.printStackTrace();
 		}
 		
+		//image 테이블에 저장
+		Image image = imageUploadDto.toEntity(imageFileName,principalDetails.getUser());
+		Image imageEntity = imageRepository.save(image);
+//		System.out.println(imageEntity);
 	}
 }

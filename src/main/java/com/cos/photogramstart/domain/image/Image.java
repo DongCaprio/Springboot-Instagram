@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class Image {
 	private int id;
 	private String caption;
 	private String postImageUrl; //사진을 특정 폴더에 저장 후 DB에 그 저장된 경로를 insert함
-	
+	 
 	@JoinColumn(name = "userId")
 	@ManyToOne
 	private User user;
