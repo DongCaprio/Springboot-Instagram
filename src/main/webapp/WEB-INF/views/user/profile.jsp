@@ -54,7 +54,7 @@
 				<ul>
 					<li><a href=""> 게시물<span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id });"> 구독정보<span>2</span>
+					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id });"> 구독정보<span>${dto.subscribeCount }</span>
 					</a></li>
 				</ul>
 			</div>
