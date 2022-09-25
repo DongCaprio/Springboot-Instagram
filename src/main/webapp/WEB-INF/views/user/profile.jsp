@@ -52,9 +52,9 @@
 
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>${user.images.size()}</span>
+					<li><a href=""> 게시물<span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id });"> 구독정보<span>${dto.subscribeCount }</span>
+					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id });"> 구독정보<span>2</span>
 					</a></li>
 				</ul>
 			</div>
@@ -85,7 +85,7 @@
 						<a href=""> <img src="/upload/${ image.postImageUrl}" />
 						</a>
 						<div class="comment">
-							<a href="#" class=""> <i class="fas fa-heart"></i><span>${image.likeCount }</span>
+							<a href="#" class=""> <i class="fas fa-heart"></i><span>3</span>
 							</a>
 						</div>
 					</div>
