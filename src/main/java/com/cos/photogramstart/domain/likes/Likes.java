@@ -44,8 +44,4 @@ public class Likes {
 	
 	private LocalDateTime createTime;
 	
-	@PrePersist
-	public void createDate() {
-		this.createTime = LocalDateTime.now();
-	}
 }
