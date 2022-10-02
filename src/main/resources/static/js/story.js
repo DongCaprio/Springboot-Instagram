@@ -64,7 +64,7 @@ function getStoryItem(image) {
 		
 				<div id="storyCommentList-${image.id}">`;
 
-	image.comments.forEach((comment) => {
+	/*image.comments.forEach((comment) => {
 		item += `
 						<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 						<p>
@@ -81,7 +81,7 @@ function getStoryItem(image) {
 		item += `
 					</div>
 						`;
-	});
+	});*/
 
 
 	item += `
