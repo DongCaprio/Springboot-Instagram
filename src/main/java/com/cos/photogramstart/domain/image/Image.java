@@ -51,6 +51,9 @@ public class Image {
 	@Transient
 	private boolean likeState;
 	
+	@Transient
+	private int likeCount;
+	
 	private LocalDateTime createTime;
 	
 	@PrePersist
