@@ -3,6 +3,7 @@ package com.cos.photogramstart.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,6 @@ import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
-import com.sun.mail.handlers.image_gif;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +24,11 @@ import lombok.RequiredArgsConstructor;
 public class ImageService {
 	
 	private final ImageRepository imageRepository;
+	
+	@Transactional(readOnly = true)
+	public List<Image> 인기사진(){
+		return imageRepository.mPopular();
+	}
 	
 	@Transactional(readOnly = true)
 	public Page<Image> 이미지스토리(int principalId, Pageable pageable){
