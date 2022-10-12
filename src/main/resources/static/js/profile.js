@@ -13,7 +13,6 @@
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
 function toggleSubscribe(toUserId, obj) {
 	if ($(obj).text() === "구독취소") {
-
 		$.ajax({
 			type: "delete",
 			url: "/api/subscribe/" + toUserId,
@@ -22,9 +21,9 @@ function toggleSubscribe(toUserId, obj) {
 			$(obj).text("구독하기");
 			$(obj).toggleClass("blue");
 		}).fail(error => {
-			console.log("구독취소 실패", error);
+			debugger;
+			console.log("구독취소실패", error)
 		});
-
 
 	} else {
 		$.ajax({
@@ -35,7 +34,7 @@ function toggleSubscribe(toUserId, obj) {
 			$(obj).text("구독취소");
 			$(obj).toggleClass("blue");
 		}).fail(error => {
-			console.log("구독하기 실패", error);
+			console.log("구독하기실패", error)
 		});
 	}
 }
@@ -46,8 +45,11 @@ function subscribeInfoModalOpen(pageUserId) {
 	$.ajax({
 		url: `/api/user/${pageUserId}/subscribe`,
 		dataType: "json"
+
 	}).done(res => {
 		console.log(res.data); //위의 dataType:"json"은 응답받는 타입이 json이므로 명시
+
+		//이 forEach뭐지 검색하기..
 		res.data.forEach((u) => {
 			console.log(u);
 			let item = getSubscribeModalItem(u);
@@ -72,7 +74,7 @@ function getSubscribeModalItem(u) {
 		if (u.subscribeState) { // 구독한 상태일때
 			item += `<button class="cta blue" onclick="toggleSubscribe(${u.id},this)">구독취소</button>`;
 		} else { //구독안한상태
-			item += `<button class="cta" onclick="toggleSubscribe(${u.id},this)">구독하기</button>`;
+			item += `<button class="cta blue" onclick="toggleSubscribe(${u.id},this)">구독하기</button>`;
 		}
 	} else {
 
@@ -83,9 +85,13 @@ function getSubscribeModalItem(u) {
 	return item;
 }
 
-
 // (3) 유저 프로파일 사진 변경 (완)
-function profileImageUpload() {
+function profileImageUpload(pageUserId, principalId) {
+	if (pageUserId != principalId) {
+		alert('다른사람의 사진은 변경할 수 없습니다');
+		return;
+	}
+
 	$("#userProfileImageInput").click();
 
 	$("#userProfileImageInput").on("change", (e) => {
@@ -96,12 +102,32 @@ function profileImageUpload() {
 			return;
 		}
 
-		// 사진 전송 성공시 이미지 변경
-		let reader = new FileReader();
-		reader.onload = (e) => {
-			$("#userProfileImage").attr("src", e.target.result);
-		}
-		reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+		//서버에 이미지를 전송
+		let profileImageForm = $("#userProfileImageForm")[0];
+		console.log(profileImageForm);
+
+		// FormData객체를 이용하면 form 태그의 필드와 그 값을 나타내는 일련의 key/value 쌍을 담을 수 있다.
+		let formData = new FormData(profileImageForm); //이렇게 해주면 폼태그가 들고있는 값들이 담긴다.
+		$.ajax({
+			type:"put",
+			url: `/api/user/${principalId}/profileImageUrl`,
+			data: formData,
+			contentType: false, //필수!: ajax로 form의 사진전송하려면 false 필수로 넣어야한다(기본값은 x-www-form~)
+			processData: false, //필수!: 위에꺼 false로 주면 기본값이 QueryString이 된다. 그것도 해제하려면 이것도 값을 false로 설정
+			enctype: "multipart/form-data", //jsp form태그안에 enctype을 설정하면 여기에 안적어도 된다
+			dataType: "json"
+		}).done(res => {
+			// 사진 전송 성공시 이미지 변경
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				$("#userProfileImage").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+		}).fail(error => {
+			console.log(error);
+		});
+
+
 	});
 }
 
