@@ -49,7 +49,7 @@ public class ImageController {
 		}
 		
 		imageService.사진업로드(imageUploadDto, principalDetails);
-		return "redirect:/user/"+principalDetails.getUser().getId();
+		return "redirect:/user/"+principalDetails.getUser().getId(); 
 	}
 	
 }
